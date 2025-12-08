@@ -1,0 +1,104 @@
+Textile Order Tracking and Production Management System 
+DSA Project Report 
+1. Introduction 
+This project focuses on designing and implementing a Textile Order Tracking and Production Management System. It is intended for textile and garment manufacturing units that need to efficiently manage customer orders, track production stages, and maintain a fast and searchable order database. 
+The system supports creation and storage of textile orders, tracking of each order’s progress through multiple production stages, and searching by different keys. It also includes a custom-built file-based database with indexing implemented using B-Tree and Hashing. The backend is hosted on a cloud platform, while the frontend runs on a local client device, fulfilling the two-tier architectural requirement. 
+2. Features of the Application 
+2.1 Add and Store Textile Orders 
+The system allows adding new orders that include the following data: 
+● Order ID 
+● Customer Name 
+● Product Type 
+● Quantity 
+● Production Stage 
+● Date of Order 
+The order is written into a file-based database and indexed for fast retrieval. 2.2 Track Production Pipeline 
+Each order passes through the following stages in the production process: 
+● Cutting 
+● Stitching 
+● Finishing
+● Packed 
+A Queue is used to simulate this workflow. Orders follow a First-In-First-Out (FIFO) sequence, which reflects real factory processing patterns. 
+2.3 Searching Capabilities 
+Two types of search operations are supported: 
+Search by Order ID (using B-Tree) 
+B-Trees provide efficient and balanced search operations for numeric keys, making them suitable for database indexing. 
+Search by Customer Name (using Hashing) 
+A hash table is used to index customer names for constant-time average-case search performance. 
+2.4 Custom File-Based Database 
+All orders are stored in files rather than a traditional SQL or NoSQL database. The system maintains: 
+● A raw data file containing stored order records 
+● An index file with B-Tree nodes 
+● A hash-index file with hash table buckets 
+This satisfies the requirement of implementing a self-made database. 
+2.5 Cloud-Hosted Backend with Local Frontend 
+The backend is hosted on a cloud service such as Railway, Render, or AWS, and handles all business logic, data persistence, and data structure operations. 
+The frontend can be implemented using any technology such as React, HTML/CSS/JavaScript, or Flutter, and it communicates with the backend through REST APIs. 
+3. Use of Data Structures 
+3.1 B-Tree for Order ID Indexing 
+A B-Tree is used to index Order IDs. It ensures: 
+● Balanced height for consistent performance 
+● Logarithmic time search 
+● Efficient insertion and deletion
+● Suitability for disk-based indexing 
+Whenever an order is added, its Order ID and file offset are inserted into the B-Tree. During search, the B-Tree provides the file offset from which the record is directly accessed. 
+3.2 Hash Table for Customer Name Indexing 
+Customer names are indexed using a hash table. A hash function converts the name into a bucket index. 
+This allows: 
+● Fast, near constant time searching 
+● Handling of collisions using chaining 
+● Efficient support for duplicate or similar names 
+This helps users quickly locate orders by customer identity. 
+3.3 Queue for Production Pipeline 
+The processing of orders through different production stages is simulated using a Queue. When an order enters the factory: 
+● It is enqueued into the production queue 
+● When processed, it is dequeued, stage updated, and re-enqueued 
+This realistically represents assembly-line order processing. 
+3.4 Additional Structures 
+Vectors or linked lists may be used internally to temporarily store data in memory during server operations. 
+4. Backend Architecture 
+The system follows a two-tier architecture. 
+4.1 Backend (Cloud Hosted) 
+The backend contains: 
+● File-based database manager 
+● B-Tree module for Order ID indexing 
+● Hash table module for name indexing 
+● Queue module to simulate production stages 
+● REST API endpoints
+Example API endpoints: 
+● /addOrder 
+● /searchByID 
+● /searchByCustomer 
+● /advanceStage 
+● /getAllOrders 
+The backend is hosted on a cloud platform so it can be accessed from any frontend client. 4.2 Frontend (Client-Side) 
+The frontend displays order information and allows user interaction. It communicates with the backend using HTTP requests. 
+It does not include heavy logic; it only sends user requests and renders backend responses. 5. File-Based Database Structure 
+The database consists of three main files: 
+5.1 orders.db 
+Contains raw order records in serialized format. 
+5.2 btree_index.db 
+Contains B-Tree nodes storing: 
+● Keys (Order ID) 
+● Offsets (location of record in orders.db) 
+5.3 name_hash_index.db 
+Stores hash buckets, where each bucket contains: 
+● Customer name 
+● Corresponding record file offsets 
+This design ensures fast reads while avoiding external database systems. 6. Technical Implementation 
+6.1 Programming Languages
+Backend can be implemented using C++, Python, or Node.js. 
+Frontend may use HTML/CSS/JS, React, or Flutter. 
+6.2 Major Modules 
+1. File Manager 
+Handles reading and writing records to disk, managing file offsets, and ensuring durability. 
+2. B-Tree Module 
+Implements insert, search, and node-splitting operations. Handles serialization of nodes to the index file. 
+3. Hash Table Module 
+Responsible for hashing names, managing buckets, handling collisions, and storing offsets. 
+4. Queue Module 
+Simulates production line state management. 
+5. REST API Layer 
+Connects backend logic to frontend through structured endpoints. API returns JSON responses. 
+7. Conclusion 
+The Textile Order Tracking and Production Management System is a practical, real-world solution that demonstrates the application of Data Structures and Algorithms in database indexing, production management, and efficient data storage. With its cloud-hosted backend, custom file-based storage system, and effective use of B-Tree, Hashing, and Queue structures, the project meets all academic requirements while remaining simple, logical, and industry-relevant.
