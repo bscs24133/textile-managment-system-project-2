@@ -18,6 +18,7 @@ public:
 	void viewProductionQueue() const;
 
 private:
+
 	BTree idIndex;
 	HashTable nameIndex;
 	ProductionQueue stageQueue;

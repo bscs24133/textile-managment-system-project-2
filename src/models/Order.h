@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-class Order {
-public:
+
+struct Order {
 	int orderID;
 	std::string customerName;
 	std::string productType;
@@ -9,6 +9,7 @@ public:
 	std::string productionStage;
 	std::string dateOfOrder;
 
-	Order(int id, const std::string& customer, const std::string& product, int qty, const std::string& date);
-	void display() const;
+	Order() : orderID(0), quantity(0) {}
+	Order(int id, const std::string &cust, const std::string &prod, int qty, const std::string &date)
+		: orderID(id), customerName(cust), productType(prod), quantity(qty), productionStage("Received"), dateOfOrder(date) {}
 };

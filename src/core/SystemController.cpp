@@ -2,7 +2,16 @@
 #include <iostream>
 #include <limits>
 
-SystemController::SystemController() : idIndex(3), nameIndex(101) {}
+SystemController::SystemController() : idIndex(3), nameIndex(101) {
+	// After BTree constructed (it loads persisted orders), register them into controller indices
+	auto persisted = idIndex.getPersistedOrders();
+	for (auto o : persisted) {
+		// add to hash index, production queue and controller list so view/search work after restart
+		nameIndex.insert(o->customerName, o);
+		stageQueue.enqueue(o);
+		allOrders.push_back(o);
+	}
+}
 SystemController::~SystemController() {
 	for (auto p : allOrders) delete p;
 }
